@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 # Set your OpenAI API key (replace with your actual API key)
-openai.api_key = "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"
+openai.api_key = "Ditto"
 
 def generate_questions_with_openai(topic, num_questions=10):
     prompt = (
