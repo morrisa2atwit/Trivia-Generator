@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quiz: {{ topic }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 2rem; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 1rem; }
+    .question { margin-bottom: 1.5rem; }
+    .question p { margin: 0.5rem 0; }
+    label { display: block; margin-bottom: 0.5rem; }
+    button.submit-btn { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
+    .peek { background-color: #eee; border: none; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz: {{ topic }}</h1>
+    <form method="POST" action="/submit_quiz">
+      <input type="hidden" name="total_questions" value="{{ questions|length }}">
+      {% for q in questions %}
+      <div class="question">
+        <p><strong>Question {{ loop.index }}:</strong> {{ q.question }}</p>
+        <input type="hidden" name="correct_answer_{{ loop.index }}" value="{{ q.answer }}">
+        {% for option in q.options %}
+          <label>
+            <input type="radio" name="user_answer_{{ loop.index }}" value="{{ option }}" required>
+            {{ option }}
+          </label>
+        {% endfor %}
+        <button type="button" class="peek" onclick="toggleAnswer('answer{{ loop.index }}')">Peek Answer</button>
+        <div id="answer{{ loop.index }}" style="display: none; margin-top: 0.5rem; color: #555;">
+          <strong>Correct Answer:</strong> {{ q.answer }}
+        </div>
+      </div>
+      {% endfor %}
+      <button type="submit" class="submit-btn">Submit Answers</button>
+    </form>
+  </div>
+  <script>
+    function toggleAnswer(id) {
+      var elem = document.getElementById(id);
+      if (elem.style.display === "none") {
+        elem.style.display = "block";
+      } else {
+        elem.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

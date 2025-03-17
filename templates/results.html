@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quiz Results</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 2rem; }
+    .container { max-width: 600px; margin: auto; background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin-bottom: 1rem; }
+    .result { margin-bottom: 1.5rem; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quiz Results</h1>
+    {% for r in results %}
+      <div class="result">
+        <p><strong>Question {{ r.question_num }}:</strong></p>
+        <p>Your answer: {{ r.user_answer }} {% if r.is_correct %} <span class="correct">(Correct)</span> {% else %} <span class="incorrect">(Incorrect)</span> {% endif %}</p>
+        {% if not r.is_correct %}
+          <p>Correct answer: {{ r.correct_answer }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
